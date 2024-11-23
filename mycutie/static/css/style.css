@@ -1,0 +1,200 @@
+body{
+    font-family: Arial, sans-serif;
+    background-image: url(/static/images/baby_image.jpeg);
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    margin: 0px;
+    padding: 0px;
+    /* background-color: #3513e2; */
+}
+
+
+/* Header Styling */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    /* background-color: #f8f8f8; */
+}
+
+/* Heading with Image */
+.heading1 {
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.heading1 img {
+    width: 40px; /* Image size */
+    height: auto;
+    margin-right: 10px; /* Spacing between logo and text */
+}
+
+/* Navbar Styling */
+.navbar {
+    display: flex;
+    align-items: center;
+}
+/* Navbar Link Styling */
+.nav-links {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.nav-links li {
+    margin-right: 20px;
+}
+
+/* Icon Styling */
+.nav-links li a {
+    text-decoration: none;
+    font-size: 15px;
+    color: #333;
+    display: flex;
+    align-items: center;
+    transition: color 0.3s ease;
+}
+
+.nav-links li a i {
+    margin-right: 8px;
+    font-size: 11px;
+}
+
+/* Hover Effect */
+.nav-links li a:hover {
+    color: #ff5733; 
+}
+
+.nav-links li a:hover i {
+    color: #ff5733; 
+}
+
+
+/* Search Box Styling */
+.search-box {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+/* Search Input */
+#search-bar {
+    padding: 8px 12px;
+    border: 2px solid #ccc;
+    border-radius: 25px;
+    width: 200px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+#search-bar:focus {
+    outline: none;
+    border-color: #ff5733; /* Highlight border on focus */
+    box-shadow: 0 0 5px rgba(255, 87, 51, 0.6); /* Focus effect */
+}
+/* Search Button Styling */
+.search-button {
+    position: absolute;
+    right: 10px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+.search-button i {
+    font-size: 20px;
+    color: #333;
+    transition: color 0.3s ease;
+}
+.search-button:hover i {
+    color: #ff5733; /* Change icon color on hover */
+}
+
+/*body...*/
+h1{
+    color: #3513e2;
+    /* background-color:rgb(215, 215, 173) ; */
+    text-align: center;
+    margin-top: 20px;
+}
+
+
+p{
+    text-justify: auto;
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-top: 10px;
+}
+/* footer {
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+} */
+/* .icon{
+    color: floralwhite;
+    margin-top: 2px;
+    font-size: 15px;
+}
+button {
+    padding: 10px 15px;
+    background-color: hsl(211, 52%, 50%);
+    color: rgb(247, 248, 247);
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    margin-left: 700px;
+    margin-top: 10px;
+    text-shadow: 2px 2px 5px rgb(13, 26, 27);
+} */
+
+
+
+
+/*phone used...*/
+@media(max-width:768px){
+    .heading1{
+        font-size: 30px;
+    }
+    header {
+       
+        background-color: rgb(182, 156, 130);;
+        
+    }
+    .search-box {
+        display: none;
+    }
+    button{
+        margin-left: 130px;
+    }
+    .nav-links a {
+        text-decoration: none;
+        color: rgb(207, 157, 8);
+    }
+    h1{
+        color: #9281e6;
+        text-align: center;
+        margin-top: 20px;
+    }
+    p{
+        text-justify: auto;
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-top: 10px;
+
+    }
+    .icon{
+        color: hsl(287, 55%, 75%);
+        margin-top: 2px;
+        font-size: 12px;
+    }
+    
+
+}
+
+    

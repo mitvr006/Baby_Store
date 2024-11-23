@@ -1,0 +1,17 @@
+<header>
+    <div class="heading1">
+        <img src="/static/images/baby_image.jpg" alt="Baby Store" class="logo">
+        Baby Store
+    </div>
+    <nav class="navbar">
+        <ul class="nav-links">
+            <li><a href="#"><i class="fas fa-shopping-cart"></i> Cart</a></li>
+            <li><a href="#"><i class="fas fa-envelope"></i> Contact</a></li>
+            <li><a href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+        </ul>
+        <div class="search-box">
+            <input type="text" placeholder="Search..." id="search-bar">
+            <button type="submit" class="search-button"><i class="fas fa-search"></i></button>
+        </div>
+    </nav>
+</header>
