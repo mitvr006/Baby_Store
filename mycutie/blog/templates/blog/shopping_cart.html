@@ -1,0 +1,28 @@
+<!-- templates/cart/cart_detail.html -->
+<h1>Shopping Cart</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Total</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in cart.cartitem_set.all %}
+        <tr>
+            <td>{{ item.product.name }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>{{ item.product.price }}</td>
+            <td>{{ item.total_price }}</td>
+            <td>
+                <a href="{% url 'remove_from_cart' item.id %}">Remove</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<p>Total: {{ cart.total_price }}</p>
+<a href="/products/">Continue Shopping</a>
