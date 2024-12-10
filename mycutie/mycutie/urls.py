@@ -24,6 +24,6 @@ urlpatterns = [
     path('home/', views.h),
     path('', views.home, name='home'),
     path('akash/', views.akash ,name="akash"),
-    path('backend/', include('blog.urls')),
+    path('blog/', include('blog.urls')),
     
 ]

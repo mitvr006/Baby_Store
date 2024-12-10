@@ -1,17 +1,14 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
-from .models import User
+from django.http import HttpResponse , JsonResponse
+from .models import Product
 from django.contrib.auth import authenticate, login,logout
 from django.contrib import messages 
 from django.contrib.auth.hashers import make_password  
+from django.contrib.auth.models import User
 
 
 def signup(request):
-    # if request.method == 'GET':
-    #     return render(request, 'signup.html')
-
     if request.method == 'POST':
-        print("hhhhhhhhhhhhhhhhhhhhh")
         username = request.POST.get('username')
         first_name = request.POST.get('fname')
         last_name = request.POST.get('lname')
@@ -38,10 +35,10 @@ def signup(request):
 
 def login_view(request):
     if request.method == 'POST':
-        email = request.POST.get('email')
+        username = request.POST.get('username')
         password = request.POST.get('password')
 
-        user = authenticate(request, username=email, password=password)
+        user = authenticate(request, username=username, password=password)
 
         if user is not None:
             login(request, user)
@@ -53,6 +50,49 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)  
-    return redirect('home')  
+    return redirect('home') 
+
+
+
+#cart code in views.py
+def product_list(request):
+    """Display all products."""
+    products = Product.objects.all()
+    return render(request, 'blog/product_list.html', {'products': products})
+
+def cart_detail(request):
+    """Display the cart."""
+    cart = request.session.get('cart', {})
+    total = sum(item['price'] * item['quantity'] for item in cart.values())
+    return render(request, 'blog/cart_detail.html', {'cart': cart, 'total': total})
+
+def add_to_cart(request, product_id):
+    """Add an item to the cart."""
+    cart = request.session.get('cart', {})
+    product = get_object_or_404(Product, id=product_id)
+
+    if str(product_id) in cart:
+        cart[str(product_id)]['quantity'] += 1
+    else:
+        cart[str(product_id)] = {
+            'name': product.name,
+            'price': float(product.price),
+            'quantity': 1,
+        }
+
+    request.session['cart'] = cart
+    return redirect('cart_detail')
+
+def remove_from_cart(request, product_id):
+    """Remove an item from the cart."""
+    cart = request.session.get('cart', {})
+    if str(product_id) in cart:
+        del cart[str(product_id)]
+    request.session['cart'] = cart
+    return redirect('cart_detail')
+
+
+
+
 
 
