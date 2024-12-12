@@ -1,0 +1,89 @@
+<!-- cart.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f1f3f6;
+            margin: 0;
+            padding: 0;
+        }
+        .cart-container {
+            width: 80%;
+            margin: 20px auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .cart-header {
+            background-color: #2874f0;
+            color: white;
+            padding: 15px;
+            font-size: 20px;
+            text-align: center;
+        }
+        .cart-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        .cart-item img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            margin-right: 20px;
+        }
+        .cart-item-info {
+            flex: 1;
+        }
+        .cart-item-actions {
+            text-align: center;
+        }
+        .cart-item-actions input {
+            width: 50px;
+            text-align: center;
+        }
+        .cart-total {
+            text-align: right;
+            padding: 15px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .remove-btn {
+            color: red;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="cart-container">
+        <div class="cart-header">Your Shopping Cart</div>
+        {% for item in cart_items %}
+        <div class="cart-item">
+            <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+            <div class="cart-item-info">
+                <h3>{{ item.product.name }}</h3>
+                <p>Price: ₹{{ item.product.price }}</p>
+                <p>Total: ₹{{ item.total_price }}</p>
+            </div>
+            <div class="cart-item-actions">
+                <form method="post" action="{% url 'update_cart' item.id %}">
+                    {% csrf_token %}
+                    <input type="number" name="quantity" value="{{ item.quantity }}" min="1">
+                    <button type="submit">Update</button>
+                </form>
+                <a href="{% url 'remove_from_cart' item.id %}" class="remove-btn">Remove</a>
+            </div>
+        </div>
+        {% endfor %}
+        <div class="cart-total">Grand Total: ₹{{ total_price }}</div>
+    </div>
+</body>
+</html>

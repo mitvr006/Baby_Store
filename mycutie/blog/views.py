@@ -17,7 +17,7 @@ def signup(request):
 
         if User.objects.filter(email=email).exists():
             messages.error(request, "Email is already registered.")
-            return render(request, 'signup.html')
+            return render(request, 'blog/signup.html')
 
         User.objects.create(
             username=username,
@@ -61,36 +61,38 @@ def product_list(request):
     return render(request, 'blog/product_list.html', {'products': products})
 
 def cart_detail(request):
-    """Display the cart."""
     cart = request.session.get('cart', {})
-    total = sum(item['price'] * item['quantity'] for item in cart.values())
-    return render(request, 'blog/cart_detail.html', {'cart': cart, 'total': total})
+    products = []
+    total_price = 0
+    for product_id, quantity in cart.items():
+        product = get_object_or_404(Product, id=product_id)
+        products.append({'product': product, 'quantity': quantity})
+        total_price += product.price * quantity
+    return render(request, 'blog/cart_detail.html', {'products': products, 'total_price': total_price})
 
 def add_to_cart(request, product_id):
-    """Add an item to the cart."""
     cart = request.session.get('cart', {})
-    product = get_object_or_404(Product, id=product_id)
-
-    if str(product_id) in cart:
-        cart[str(product_id)]['quantity'] += 1
-    else:
-        cart[str(product_id)] = {
-            'name': product.name,
-            'price': float(product.price),
-            'quantity': 1,
-        }
-
+    cart[product_id] = cart.get(product_id, 0) + 1
     request.session['cart'] = cart
     return redirect('cart_detail')
 
 def remove_from_cart(request, product_id):
-    """Remove an item from the cart."""
     cart = request.session.get('cart', {})
-    if str(product_id) in cart:
-        del cart[str(product_id)]
+    if product_id in cart:
+        del cart[product_id]
     request.session['cart'] = cart
     return redirect('cart_detail')
 
+def update_cart(request, product_id):
+    if request.method == 'POST':
+        quantity = int(request.POST.get('quantity', 1))
+        cart = request.session.get('cart', {})
+        if quantity > 0:
+            cart[product_id] = quantity
+        else:
+            del cart[product_id]
+        request.session['cart'] = cart
+    return redirect('cart_detail')
 
 
 
