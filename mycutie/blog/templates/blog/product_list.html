@@ -4,61 +4,101 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product List</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
+            /* background-color: rgb(169, 168, 168); */
+        }
+        .container {
+            max-width: 600px;
+            height: 400px;
+            margin-left: 140px;
+            margin-top: 60px;
+            background-color: rgb(206, 205, 205);
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
         }
         .product {
-            border: 1px solid #ccc;
-            padding: 10px;
-            margin-bottom: 10px;
             display: flex;
-            justify-content: space-between;
+            border-bottom: 1px solid #ddd;
+            padding: 20px 0;
             align-items: center;
         }
+        .product:last-child {
+            border-bottom: none;
+        }
         .product img {
-            max-width: 100px;
+            width: 120px;
+            height: auto;
+            object-fit: contain;
             margin-right: 20px;
         }
         .product-details {
             flex-grow: 1;
         }
+        .product-details h2 {
+            font-size: 18px;
+            margin: 0;
+            color: #212121;
+        }
+        .product-details p {
+            font-size: 14px;
+            color: #757575;
+            margin: 5px 0;
+        }
         .product-price {
+            font-size: 18px;
             font-weight: bold;
+            color: #388e3c;
             margin-right: 20px;
         }
         .add-to-cart {
-            background-color: #28a745;
+            background-color: #2874f0;
             color: #fff;
             border: none;
-            padding: 5px 10px;
+            padding: 10px 20px;
+            font-size: 14px;
+            text-transform: uppercase;
             cursor: pointer;
+            border-radius: 2px;
             text-decoration: none;
+            transition: background-color 0.3s ease;
         }
         .add-to-cart:hover {
-            background-color: #218838;
+            background-color: #0056b3;
         }
     </style>
 </head>
 <body>
-    <h1>Products</h1>
-    <div>
-        {% for product in products %}
-        <div class="product">
-            {% if product.image %}
-            <img src="{{ product.image.url }}" alt="{{ product.name }}">
-            {% endif %}
-            <div class="product-details">
-                <h2>{{ product.name }}</h2>
-                <p>{{ product.description }}</p>
+    {% include "header.html" %}
+    <div class="container">
+        <h1>Products</h1>
+        <div>
+            {% for product in products %}
+            <div class="product">
+                {% if product.image %}
+                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                {% endif %}
+                <div class="product-details">
+                    <h2>{{ product.name }}</h2>
+                    <p>{{ product.description }}</p>
+                </div>
+                <div class="product-price">${{ product.price }}</div>
+                <a href="{% url 'add_to_cart' product.id %}" class="add-to-cart">Add to Cart</a>
             </div>
-            <div class="product-price">${{ product.price }}</div>
-            <a href="{% url 'add_to_cart' product.id %}" class="add-to-cart">Add to Cart</a>
+            {% empty %}
+            <p>No products available.</p>
+            {% endfor %}
         </div>
-        {% empty %}
-        <p>No products available.</p>
-        {% endfor %}
     </div>
 </body>
 </html>
+

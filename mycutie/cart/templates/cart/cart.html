@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart</title>
+    <style>
+        /* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+}
+
+/* Container */
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Heading */
+.heading {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Cart Table */
+.cart-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.cart-table th,
+.cart-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+.cart-table th {
+    background-color: #f2f2f2;
+}
+
+.product-cell {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.product-image {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+/* Quantity Form */
+.quantity-form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.quantity-input {
+    width: 50px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+}
+
+.quantity-btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.quantity-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Total Price */
+.total-price {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Actions */
+.actions {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.action-btn {
+    padding: 10px 20px;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.clear-cart {
+    background-color: #ff4d4d;
+}
+
+.add-more {
+    background-color: #007bff;
+}
+
+.checkout {
+    background-color: #28a745;
+}
+
+.action-btn:hover {
+    opacity: 0.9;
+}
+
+/* Empty Cart */
+.empty-cart {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.empty-cart-image {
+    max-width: 200px;
+    margin-bottom: 10px;
+}
+
+/* Footer */
+.footer {
+    background-color: #fff;
+    text-align: center;
+    padding: 10px;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.footer-btn {
+    margin: 0 10px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.footer-btn:hover {
+    opacity: 0.9;
+}
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1 class="heading">Your Shopping Cart</h1>
+
+    {% if cart.items.all %}
+        <table class="cart-table">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                    <th>Remove</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart.items.all %}
+                <tr>
+                    <td class="product-cell">
+                        <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="product-image">
+                        <span>{{ item.product.name }}</span>
+                    </td>
+                    <td>
+                        <form method="POST" action="{% url 'update_cart' item.id %}" class="quantity-form">
+                            {% csrf_token %}
+                            <button type="submit" class="quantity-btn">-</button>
+                            <input type="number" name="quantity" value="{{ item.quantity }}" min="1" max="10" class="quantity-input">
+                            <button type="submit" class="quantity-btn">+</button>
+                        </form>
+                    </td>
+                    <td>$ {{ item.product.price }}</td>
+                    <td>$ {{ item.get_total_price }}</td>
+                    <td>
+                        <form method="POST" action="{% url 'remove_from_cart' item.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="remove-btn">Remove</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="total-price">
+            Total Price: <span>${{ cart.get_total_price }}</span>
+        </div>
+
+        <div class="actions">
+            <form method="POST">
+                {% csrf_token %}
+                <button type="submit" class="action-btn clear-cart">Clear Cart</button>
+            </form>
+            <a href="{% url 'add_product' %}" class="action-btn add-more">Add More Products</a>
+            <a href="{% url 'checkout' %}" class="action-btn checkout">Proceed to Checkout</a>
+        </div>
+
+    {% else %}
+        <div class="empty-cart">
+            <img src="/static/images/empty-cart.png" alt="Empty Cart" class="empty-cart-image">
+            <p>Your cart is empty. <a href="{% url 'home' %}" class="action-btn">Start Shopping</a></p>
+        </div>
+    {% endif %}
+</div>
+
+<footer class="footer">
+    <a href="{% url 'checkout' %}" class="footer-btn">Proceed to Checkout</a>
+    <a href="{% url 'home' %}" class="footer-btn">Continue Shopping</a>
+</footer>
+
+</body>
+</html>

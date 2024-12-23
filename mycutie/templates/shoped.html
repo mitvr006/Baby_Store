@@ -23,24 +23,32 @@
         gaya hai taki nayi moms aur dads apne babies ke liye best cheezen le paayein.
     </p> 
 
-    <footer style="background-color: #333; color: white; padding: 10px; text-align: center; margin-top: 490px;">
-        <div style="margin-bottom: 10px;">
-            <a href="#" style="color: white; margin: 0 10px;">
-                <i class="fab fa-facebook"></i>
-            </a>
-            <a href="#" style="color: white; margin: 0 10px;">
-                <i class="fab fa-twitter"></i>
-            </a>
-            <a href="#" style="color: white; margin: 0 10px;">
-                <i class="fab fa-instagram"></i>
-            </a>
-            <a href="#" style="color: white; margin: 0 10px;">
-                <i class="fab fa-linkedin"></i>
-            </a>
+    <div class="container">
+        <h1>Products</h1>
+        <div>
+            {% for product in products %}
+            <div class="product"> 
+                <p>text image</p>
+
+                {% if product.image %}
+               
+                <img src="{{ products.image.url }}" alt="{{ product.name }}">
+                {% endif %}
+                <div class="product-details">
+                    <h2>{{ product.name }}</h2>
+                    <p>{{ product.description }}</p>
+                </div>
+                <div class="product-price">${{ product.price }}</div>
+                <a href="{% url 'add_to_cart' product.id %}" class="add-to-cart">Add to Cart</a>
+            </div>
+            {% empty %}
+            <p>No products available.</p>
+            {% endfor %}
         </div>
-        <p>&copy; 2024 Baby Store. All rights reserved.</p>
-    </footer>
+    </div>
 
    
+    {% include "footer.html" %}
+
 </body>
 </html>

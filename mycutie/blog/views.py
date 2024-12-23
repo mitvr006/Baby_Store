@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse , JsonResponse
 from .models import Product
+from .forms import ProductForm
 from django.contrib.auth import authenticate, login,logout
 from django.contrib import messages 
 from django.contrib.auth.hashers import make_password  
@@ -52,47 +53,23 @@ def logout_view(request):
     logout(request)  
     return redirect('home') 
 
-
-
-#cart code in views.py
-def product_list(request):
-    """Display all products."""
-    products = Product.objects.all()
-    return render(request, 'blog/product_list.html', {'products': products})
-
-def cart_detail(request):
-    cart = request.session.get('cart', {})
-    products = []
-    total_price = 0
-    for product_id, quantity in cart.items():
-        product = get_object_or_404(Product, id=product_id)
-        products.append({'product': product, 'quantity': quantity})
-        total_price += product.price * quantity
-    return render(request, 'blog/cart_detail.html', {'products': products, 'total_price': total_price})
-
-def add_to_cart(request, product_id):
-    cart = request.session.get('cart', {})
-    cart[product_id] = cart.get(product_id, 0) + 1
-    request.session['cart'] = cart
-    return redirect('cart_detail')
-
-def remove_from_cart(request, product_id):
-    cart = request.session.get('cart', {})
-    if product_id in cart:
-        del cart[product_id]
-    request.session['cart'] = cart
-    return redirect('cart_detail')
-
-def update_cart(request, product_id):
+#cart code in views.py 
+def add_product(request):
     if request.method == 'POST':
-        quantity = int(request.POST.get('quantity', 1))
-        cart = request.session.get('cart', {})
-        if quantity > 0:
-            cart[product_id] = quantity
-        else:
-            del cart[product_id]
-        request.session['cart'] = cart
-    return redirect('cart_detail')
+        form = ProductForm(request.POST, request.FILES)  # Handle form submission with POST data
+        if form.is_valid():
+            form.save()  # Save the product to the database
+            return redirect('product_list')  # Replace 'product_list' with the name of your product list URL
+    else:
+        form = ProductForm()  # Render an empty form for GET requests
+
+    return render(request, 'blog/cart_detail.html', {'form': form}) 
+
+def product_list(request):
+    products = Product.objects.all()
+    print("product", products)
+    return render(request, 'shoped.html', {'products': products})
+
 
 
 
