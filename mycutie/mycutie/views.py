@@ -9,8 +9,6 @@ def home(request):
     products = Product.objects.all()
     return render(request, 'shoped.html', {'products': products})
 
-def akash(request):
+def header(request):
     return render(request, "header.html")
 
-
-  

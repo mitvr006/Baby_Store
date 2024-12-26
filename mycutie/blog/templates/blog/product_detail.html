@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Detail Page</title>
+    <style>
+        /* General Reset */
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+    }
+
+    /* Container */
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+        gap: 20px;
+    }
+
+    /* Product Image */
+    .product-image img {
+        max-width: 100%;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Product Details */
+    .product-details {
+        max-width: 500px;
+        text-align: left;
+    }
+
+    .product-details h1 {
+        font-size: 2em;
+        margin-bottom: 10px;
+        color: #333;
+    }
+
+    .product-details .price {
+        font-size: 1.5em;
+        color: #28a745;
+        margin-bottom: 15px;
+    }
+
+    .product-details .description {
+        margin-bottom: 20px;
+        color: #555;
+    }
+
+    /* Buttons */
+    .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 1em;
+        color: #fff;
+        background-color: #007bff;
+        border: none;
+        border-radius: 5px;
+        text-align: center;
+        text-decoration: none;
+        cursor: pointer;
+        margin-right: 10px;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn:hover {
+        background-color: #0056b3;
+    }
+
+    .buy-now {
+        background-color: #28a745;
+    }
+
+    .buy-now:hover {
+        background-color: #218838;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .container {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .product-details {
+            text-align: center;
+        }
+    }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Product Image Section -->
+        <div class="product-image">
+            <img src="product-image.jpg" alt="Product Name">
+        </div>
+
+        <!-- Product Details Section -->
+        <div class="product-details">
+            <h1>Product Name</h1>
+            <p class="price">$199.99</p>
+            <p class="description">
+                This is a high-quality product that offers exceptional performance and durability. Perfect for everyday use.
+            </p>
+            <button class="btn buy-now">Buy Now</button>
+            <button class="btn add-to-cart">Add to Cart</button>
+        </div>
+    </div>
+</body>
+</html>

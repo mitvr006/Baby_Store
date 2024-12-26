@@ -56,19 +56,34 @@ def logout_view(request):
 #cart code in views.py 
 def add_product(request):
     if request.method == 'POST':
-        form = ProductForm(request.POST, request.FILES)  # Handle form submission with POST data
+        form = ProductForm(request.POST, request.FILES)  
         if form.is_valid():
-            form.save()  # Save the product to the database
-            return redirect('product_list')  # Replace 'product_list' with the name of your product list URL
+            form.save()  
+            return redirect('product_list')  
     else:
-        form = ProductForm()  # Render an empty form for GET requests
+        form = ProductForm()  
 
-    return render(request, 'blog/cart_detail.html', {'form': form}) 
+    return render(request, 'blog/add_cart.html', {'form': form}) 
 
 def product_list(request):
     products = Product.objects.all()
     print("product", products)
     return render(request, 'shoped.html', {'products': products})
+
+
+def product_detail(request, product_id):
+    product = {
+        "id": product_id,
+        "name": "Sample Product",
+        "price": 199.99,
+        "description": "This is a high-quality product perfect for everyday use.",
+        "image_url": "product-image.jpg"
+    }
+    return render(request, 'product_detail.html', {"product": product})
+
+
+
+
 
 
 

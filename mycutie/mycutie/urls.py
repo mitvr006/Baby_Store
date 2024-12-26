@@ -25,7 +25,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('home/', views.h),
     path('', views.home, name='home'),
-    path('akash/', views.akash ,name="akash"),
+    path('header/', views.header ,name="header"),
     path('blog/', include('blog.urls')),
     path('call/', include('call.urls')),  
     path('cart/', include('cart.urls')),   
