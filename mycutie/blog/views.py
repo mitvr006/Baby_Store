@@ -72,14 +72,13 @@ def product_list(request):
 
 
 def product_detail(request, product_id):
-    product = {
-        "id": product_id,
-        "name": "Sample Product",
-        "price": 199.99,
-        "description": "This is a high-quality product perfect for everyday use.",
-        "image_url": "product-image.jpg"
-    }
-    return render(request, 'product_detail.html', {"product": product})
+    product = get_object_or_404(Product, id=product_id)
+    return render(request, 'product_detail.html', {'product': product})
+
+def buy_product(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    # Add your buy logic here (e.g., add to cart, process payment, etc.)
+    return redirect('success_page')  # Redirect to a success page or cart
 
 
 

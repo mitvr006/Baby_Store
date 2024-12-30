@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details</title>
+    <style>
+        .product-detail-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            background-color: #f9f9f9;
+            font-family: Arial, sans-serif;
+        }
+
+        .product-image img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+        }
+
+        .product-details {
+            text-align: center;
+        }
+
+        .product-details h1 {
+            font-size: 24px;
+            color: #333;
+        }
+
+        .product-details p {
+            font-size: 16px;
+            color: #666;
+        }
+
+        .product-price {
+            margin: 20px 0;
+        }
+
+        .product-price p {
+            font-size: 20px;
+            color: #444;
+            font-weight: bold;
+        }
+
+        .buttons-container {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .buy-now-btn, .add-to-cart-btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .buy-now-btn {
+            background-color: #28a745;
+            color: #fff;
+        }
+
+        .buy-now-btn:hover {
+            background-color: #218838;
+        }
+
+        .add-to-cart-btn {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .add-to-cart-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="product-detail-container">
+        <div class="product-image">
+            {% if product.image %}
+            <img src="{{ product.image.url }}" alt="{{ product.name }}">
+            {% else %}
+            <p>No image available</p>
+            {% endif %}
+        </div>
+        <div class="product-details">
+            <h1>{{ product.name }}</h1>
+            <p>{{ product.description }}</p>
+        </div>
+        <div class="product-price">
+            <p>Price: ${{ product.price }}</p>
+        </div>
+        <div class="buttons-container">
+            <form method="post" action="{% url 'buy_product' product.id %}">
+                {% csrf_token %}
+                <button type="submit" class="buy-now-btn">Buy Now</button>
+            </form>
+            <form method="post" action="{% url 'add_to_cart' product.id %}">
+                {% csrf_token %}
+                <button type="submit" class="add-to-cart-btn">Add to Cart</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

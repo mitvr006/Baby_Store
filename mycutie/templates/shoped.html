@@ -130,10 +130,34 @@
             transition: background-color 0.3s;
             margin-left: 300px;
             margin-bottom: 20px;
-            
-
 
         }
+
+        .categories{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .category {
+            background-color: #cdcccc;
+            margin: 20px;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        .item {
+            background-color: #e1e1e1;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 3px;
+        }
+
     </style>
     
 </head>
@@ -150,16 +174,41 @@
         Har product ko careful research aur safety standards ke saath select kiya 
         gaya hai taki nayi moms aur dads apne babies ke liye best cheezen le paayein.
     </p> 
+    <div class="categories">
+        <div class="category" id="toys">
+            <a href="shoped.html">   
+                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+            </a>
+            <h2>Toys</h2>   
+        </div>
+        
+
+        <div class="category" id="clothes">
+            <a href="product_detail.html">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+            </a>
+            <h2>clothes</h2>
+        </div>
+        
+
+        <div class="category" id="other">
+            <a href="shoped.html">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+            </a>
+            <h2>Toys</h2>
+        </div>
+        
+    </div>
+
     <h1>Products</h1>
     <div class="container">
-        
         {% for product in products %}
         <div class="product-container">
             <div class="product-image">
                 {% if product.image %}
-                
-                <img src="{{ product.image.url }}" alt="{{ product.name }}">
-                
+                <a href="{% url 'product_detail' product.id %}">
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                </a>
                 {% else %}
                 <p>No image available</p>
                 {% endif %}
@@ -176,6 +225,7 @@
         <p>No products available.</p>
         {% endfor %}
     </div>
+    
     
 
    
