@@ -2,8 +2,8 @@
     <div class="heading1">
         <a href="{% url 'home' %}" class="home-link">
             <img src="/static/images/baby_image.jpg" alt="Baby Store" class="logo">
-            </a>
-            Baby Store
+        </a>
+        Baby Store
     </div>
     <nav class="navbar">
         <ul class="nav-links">
@@ -17,8 +17,11 @@
             <li><a href="{% url 'contact' %}"><i class="fas fa-envelope"></i> Contact</a></li>
         </ul>
         <div class="search-box">
-            <input type="text" placeholder="Search..." id="search-bar">
-            <button type="submit" class="search-button"><i class="fas fa-search"></i></button>
+            <!-- Form for search functionality -->
+            <form action="{% url 'search_products' %}" method="get">
+                <input type="text" name="query" placeholder="Search..." id="search-bar">
+                <button type="submit" class="search-button"><i class="fas fa-search"></i></button>
+            </form>
         </div>
     </nav>
 </header>

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse , JsonResponse
-from .models import Product
+from .models import Product, Category
 from .forms import ProductForm
 from django.contrib.auth import authenticate, login,logout
 from django.contrib import messages 
@@ -79,6 +79,21 @@ def buy_product(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     # Add your buy logic here (e.g., add to cart, process payment, etc.)
     return redirect('success_page')  # Redirect to a success page or cart
+
+def search_products(request):
+    query = request.GET.get('query', '').lower()
+    products = Product.objects.filter(
+        name__icontains=query
+    ) | Product.objects.filter(
+        category__name__icontains=query
+    )
+    return render(request, 'blog/search_results.html', {'products': products, 'query': query})
+
+def category_products(request, category_id):
+    category = get_object_or_404(Category, id=category_id)
+    products = Product.objects.filter(category=category)
+    return render(request, 'blog/category_products.html', {'category': category, 'products': products})
+
 
 
 
