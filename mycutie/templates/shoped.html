@@ -64,67 +64,57 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
     
+        /* Product details styling */
         .product-details {
-            margin-bottom: 10px;
+            padding: 15px;
+            background-color: #fff;
+            text-align: center;
         }
-    
+
+        /* Product name styling */
         .product-details h2 {
-            font-size: 18px;
-            margin-bottom: 5px;
+            font-size: 20px;
             color: #333;
-            word-wrap: break-word; 
+            margin-bottom: 10px;
+            font-weight: 600;
+            text-transform: capitalize; /* Capitalize each word in the product name */
             overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
-    
+
+        /* Product description styling */
         .product-details p {
-            font-size: 15px;
+            font-size: 14px;
             color: #666;
             line-height: 1.5;
-            margin-bottom: 10px;
-            word-wrap: break-word;
-            overflow: hidden;
-            display: -webkit-box;
-        }
-    
-        .product-price {
-            font-size: 16px;
-            color: #000;
-            font-weight: bold;
             margin-bottom: 15px;
-            margin-left: 200px;
-        }
-    
-        .add-to-cart {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #28a745;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 5px;
-            font-size: 10px;
-            transition: background-color 0.3s;
-            margin-top: 20px;
-
-        }
-    
-        .add-to-cart:hover {
-            background-color: #218838;
-
+            padding: 0 10px;
+            text-align: justify;
+            height: 50px; /* Limit description height */
+            overflow: hidden;
+            text-overflow: ellipsis; /* Hide overflowed text */
         }
 
-        .buy_now{
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #28a745;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 5px;
-            font-size: 10px;
-            transition: background-color 0.3s;
-            margin-left: 300px;
-            margin-bottom: 20px;
-
+        /* Product price styling */
+        .product-price {
+            padding: 10px 0;
+            background-color: #f8f8f8;
+            text-align: center;
         }
+
+        .product-price p {
+            font-size: 16px;
+            font-weight: bold;
+            color: #28a745; /* Green color for price */
+            margin-top: 10px;
+        }
+
+        /* Hover effect for product card */
+        .product:hover .product-details h2 {
+            color: #007bff; /* Change color on hover */
+        }
+
 
         .category {
             text-align: center;
@@ -172,7 +162,7 @@
         Har product ko careful research aur safety standards ke saath select kiya 
         gaya hai taki nayi moms aur dads apne babies ke liye best cheezen le paayein.
     </p> 
-    
+
     <div class="categories">
         {% for category in categories %}
         <div class="category">
