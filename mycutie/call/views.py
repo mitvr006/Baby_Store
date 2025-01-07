@@ -1,32 +1,22 @@
-# views.py
 from django.shortcuts import render
 from django.http import HttpResponse
-from .forms import ContactForm
 from django.core.mail import send_mail
 
 def contact_view(request):
     if request.method == "POST":
-        form = ContactForm(request.POST)
-        if form.is_valid():
-            name = form.cleaned_data['name']
-            email = form.cleaned_data['email']
-            message = form.cleaned_data['message']
+        name = request.POST.get("name")
+        email = request.POST.get("email")
+        message = request.POST.get("message")
 
-            print(f"Name: {name}, Email: {email}, Message: {message}")
+        # Send an email (Optional)
+        send_mail(
+            subject=f"Contact Form Submission from {name}",
+            message=f"Message: {message}\n\nFrom: {email}",
+            from_email='your_email@example.com',  # Replace with your email
+            recipient_list=['admin@example.com'],  # Replace with admin's email
+            fail_silently=False,
+        )
 
-            send_mail(
-                f"Message from {name}",
-                message,
-                email,
-                ['recipient@example.com'],  # Replace with your email
-            )
-            
-            # Return a success message
-            return HttpResponse("Thank you for your message!")
-    else:
-        form = ContactForm()
+        return HttpResponse("Thank you for contacting us!")
 
-    return render(request, 'pages/contact.html', {'form': form})
-
-
-
+    return render(request, "pages/contact.html")

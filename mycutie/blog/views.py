@@ -81,7 +81,7 @@ def buy_product(request, product_id):
     return redirect('success_page')  # Redirect to a success page or cart
 
 def search_products(request):
-    query = request.GET.get('query', '').lower()
+    query = request.GET.get('query', '')
     products = Product.objects.filter(
         name__icontains=query
     ) | Product.objects.filter(
