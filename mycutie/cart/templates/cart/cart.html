@@ -8,28 +8,28 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         /* General Styles */
+/* Base Styles */
 body {
     font-family: Arial, sans-serif;
+    /* background-color: #f3f3f3; */
     margin: 0;
     padding: 0;
-    background-color: #f9f9f9;
 }
 
-/* Container */
 .container {
-    max-width: 800px;
+    max-width: 1200px;
     margin: 20px auto;
     padding: 20px;
-    background-color: #fff;
-    border-radius: 5px;
+    background-color: #ebe9e9;
+    border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-/* Heading */
 .heading {
-    text-align: center;
-    margin-bottom: 20px;
+    font-size: 28px;
     color: #333;
+    margin-bottom: 20px;
+    text-align: center;
 }
 
 /* Cart Table */
@@ -39,130 +39,155 @@ body {
     margin-bottom: 20px;
 }
 
-.cart-table th,
+.cart-table th, 
 .cart-table td {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: center;
+    text-align: left;
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
 }
 
 .cart-table th {
-    background-color: #f2f2f2;
+    background-color: #f7f7f7;
+    font-size: 16px;
+    color: #555;
+}
+
+.cart-table td {
+    vertical-align: middle;
+    font-size: 14px;
 }
 
 .product-cell {
     display: flex;
     align-items: center;
-    gap: 10px;
+    background-color: #ebe9e9;
 }
 
 .product-image {
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
-    border-radius: 5px;
+    width: 60px;
+    height: 60px;
+    border-radius: 4px;
+    margin-right: 15px;
+    background-color: #ebe9e9;
 }
 
-/* Quantity Form */
 .quantity-form {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 5px;
 }
 
 .quantity-input {
     width: 50px;
     text-align: center;
-    border: 1px solid #ddd;
-    border-radius: 3px;
+    margin: 0 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    height: 30px;
 }
 
 .quantity-btn {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    color: #333;
+    font-size: 14px;
     padding: 5px 10px;
     cursor: pointer;
-    border-radius: 3px;
+    border-radius: 4px;
 }
 
 .quantity-btn:hover {
-    background-color: #0056b3;
+    background-color: #ddd;
 }
 
-/* Total Price */
+.remove-btn {
+    background-color: #e53935;
+    border: none;
+    color: #fff;
+    font-size: 14px;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.remove-btn:hover {
+    background-color: #d32f2f;
+}
+
+/* Total Price Section */
 .total-price {
-    text-align: center;
     font-size: 18px;
     font-weight: bold;
+    text-align: right;
     margin-bottom: 20px;
     color: #333;
 }
 
-/* Actions */
+/* Action Buttons */
 .actions {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
+    text-align: right;
 }
 
-.action-btn {
-    padding: 10px 20px;
+.action-btn, 
+.footer-btn {
+    display: inline-block;
+    background-color: #ff9900;
     color: #fff;
     text-decoration: none;
-    border-radius: 5px;
-    cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 14px;
+    margin-left: 10px;
+    text-align: center;
 }
 
-.clear-cart {
-    background-color: #ff4d4d;
+.action-btn:hover, 
+.footer-btn:hover {
+    background-color: #e68a00;
 }
 
 .add-more {
-    background-color: #007bff;
+    background-color: #0073e6;
+}
+
+.add-more:hover {
+    background-color: #005bb5;
 }
 
 .checkout {
-    background-color: #28a745;
+    background-color: #1d9c43;
 }
 
-.action-btn:hover {
-    opacity: 0.9;
+.checkout:hover {
+    background-color: #157a34;
 }
 
-/* Empty Cart */
+/* Empty Cart Styles */
 .empty-cart {
     text-align: center;
-    margin: 20px 0;
+    margin: 50px 0;
 }
 
 .empty-cart-image {
-    max-width: 200px;
-    margin-bottom: 10px;
+    max-width: 300px;
+    margin-bottom: 20px;
 }
 
-/* Footer */
-.footer {
-    background-color: #fff;
-    text-align: center;
-    padding: 10px;
-    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+.empty-cart p {
+    font-size: 18px;
+    color: #555;
 }
 
-.footer-btn {
-    margin: 0 10px;
-    margin-right: 90px;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
+.empty-cart a {
+    color: #ff9900;
     text-decoration: none;
-    border-radius: 5px;
+    font-weight: bold;
 }
 
-.footer-btn:hover {
-    opacity: 0.9;
+.empty-cart a:hover {
+    color: #e68a00;
 }
+
+
 
     </style>
 </head>
@@ -216,10 +241,7 @@ body {
             </div>
 
             <div class="actions">
-                <form method="POST">
-                    {% csrf_token %}
-                    <button type="submit" class="action-btn clear-cart">Clear Cart</button>
-                </form>
+                <a href="{% url 'home' %}" class="footer-btn">Continue Shopping</a>
                 <a href="{% url 'add_product' %}" class="action-btn add-more">Add More Products</a>
                 <a href="{% url 'checkout' %}" class="action-btn checkout">Proceed to Checkout</a>
             </div>
@@ -231,11 +253,6 @@ body {
             </div>
         {% endif %}
     </div>
-
-    <footer class="footer">
-        <!-- <a href="{% url 'checkout' %}" class="footer-btn">Proceed to Checkout</a> -->
-        <a href="{% url 'home' %}" class="footer-btn">Continue Shopping</a>
-    </footer>
 
 </body>
 </html>
