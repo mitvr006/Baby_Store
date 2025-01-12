@@ -28,7 +28,8 @@ urlpatterns = [
     path('header/', views.header ,name="header"),
     path('blog/', include('blog.urls')),
     path('call/', include('call.urls')),  
-    path('cart/', include('cart.urls')),   
+    path('cart/', include('cart.urls')),  
+    path('seller/', include('seller.urls')), 
 ]
 
 if settings.DEBUG:  # Serve media only during development
