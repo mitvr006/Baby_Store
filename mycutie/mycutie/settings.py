@@ -41,6 +41,10 @@ INSTALLED_APPS = [
     'blog',
     'call',
     'cart',
+    'rest_framework',
+    'corsheaders',
+    'rest_framework.authtoken',
+    'seller',
 ]
 
 MIDDLEWARE = [
@@ -51,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'mycutie.urls'
@@ -141,6 +146,22 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'your_email@example.com'  # Replace with your email
 EMAIL_HOST_PASSWORD = 'your_password'  # Replace with your email password
+
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+]
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+}
+
+
+
+
 
 
 

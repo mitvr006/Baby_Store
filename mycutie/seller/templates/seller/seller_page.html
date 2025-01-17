@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            padding: 8px 8px;
+            display: flex;
+            /* justify-content: space-between; */
+            justify-content: right;
+            align-items: center;
+        }
+        .logo-container {
+            display: flex;
+            align-items: center;
+            margin-right: 70%;
+            /* margin-left: 10px; */
+            justify-content: left;
+
+        }
+        img.logo {
+            width: 40px;
+            height: 40px;
+            margin-right: 10%;
+            background-color: #575757;
+            padding: 5px;
+            border: 2px solid white;
+
+            border-radius: 50%;
+            border: 2px solid white;
+            justify-content: left;
+        }
+        header a {
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            font-size: 16px;
+        }
+        header a:hover {
+            background-color: #575757;
+        }
+        .navbar {
+            background-color: #333;
+            color: white;
+            padding: 10px 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .seller-nav-links {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            list-style: none;
+            /* margin: 0;
+            padding: 0; */
+            font-size: 14px;    
+        }
+        .seller-nav-links li {
+            margin-right: 5px;
+        }
+        .seller-nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            font-size: 16px;
+
+        }
+        .seller-nav-links a:hover {
+            background-color: #575757;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Header Section with login karne ke bad home page showing the seller username and logout  -->
+    <header>
+        <div class="logo-container">
+            <img src="/static/images/baby_image.jpg" alt="Baby Store" class="logo">
+            <h2>Seller Dashboard</h2>
+        </div>
+        <nav class="navbar">
+            <ul class="seller-nav-links">
+                {% if request.session.seller_id %}
+                    <li><a href="{% url 'seller_login' %}"><i class="fas fa-user"></i> Welcome, {{ seller.username }}</a></li>
+                    <li><form action="{% url 'logout' %}" method="POST">{% csrf_token %}<a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a></form></li>
+                {% else %}
+                    <li><a href="{% url 'seller_login' %}"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                {% endif %}
+                <li><a href="{% url 'cart' %}"><i class="fas fa-shopping-cart"></i> Cart</a></li>
+                <li><a href="{% url 'contact' %}"><i class="fas fa-envelope"></i> Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+
+
+</body>
+</html>

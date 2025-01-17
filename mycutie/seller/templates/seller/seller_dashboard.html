@@ -1,0 +1,21 @@
+<!-- templates/seller_dashboard.html -->
+<!DOCTYPE html>
+<html lang="en">
+    <!-- create a seller dashboard here -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ seller.store_name }}'s Dashboard</title>
+</head>
+<body>
+    <h1>{{ seller.store_name }}'s Dashboard</h1>
+    
+
+    <h1>Welcome, {{ seller.store_name }}</h1>
+    <p>Store Description: {{ seller.store_description }}</p>
+    <p>Store Address: {{ seller.store_address }}</p>
+    <p>Contact Number: {{ seller.contact_number }}</p>
+
+    <a href="{% url 'add_product' %}">Add New Product</a> | <a href="#">View Orders</a>
+</body>
+</html>
