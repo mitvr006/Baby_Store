@@ -1,21 +1,217 @@
-<!-- templates/seller_dashboard.html -->
 <!DOCTYPE html>
 <html lang="en">
-    <!-- create a seller dashboard here -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ seller.store_name }}'s Dashboard</title>
+    <title>Seller Dashboard</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link your CSS file here -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"> <!-- Font Awesome for icons -->
+    <style>
+        body {
+            /* font-family: Arial, sans-serif; */
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+         /* General Reset */
+        .header-title {
+        font-size: 2rem;
+        margin-top: 50px;
+        margin-left: 10px;
+        }
+        
+        p{
+            margin-left: 10px;
+        }
+        
+        /* Main Section */
+        main {
+        padding: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        }
+
+        /* Dashboard Section */
+        .dashboard {
+        background: #fff;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .dashboard h2 {
+        margin-bottom: 1rem;
+        color: #007bff;
+        }
+
+        .stats {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        }
+
+        .stat {
+        flex: 1 1 calc(33.333% - 1rem);
+        background-color: #f4f4f4;
+        margin: 0.5rem;
+        padding: 1rem;
+        text-align: center;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat h3 {
+        margin-bottom: 0.5rem;
+        font-size: 1.2rem;
+        }
+
+        .stat p {
+        font-size: 1.5rem;
+        color: #007bff;
+        font-weight: bold;
+        }
+
+        /* Orders Section */
+        .orders {
+        background: #fff;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .orders h2 {
+        margin-bottom: 1rem;
+        color: #007bff;
+        }
+
+        .orders ul {
+        list-style: none;
+        padding: 0;
+        }
+
+        .orders li {
+        margin-bottom: 0.5rem;
+        font-size: 1rem;
+        }
+
+        /* Quick Actions Section */
+        .actions {
+        background: #fff;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .actions h2 {
+        margin-bottom: 1rem;
+        color: #007bff;
+        }
+
+        .actions button {
+        display: inline-block;
+        margin: 0.5rem 0;
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+        color: #fff;
+        background-color: #007bff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+        }
+
+        .actions button:hover {
+        background-color: #0056b3;
+        }
+
+        /* Notifications Section */
+        .notifications {
+        background: #fff;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .notifications h2 {
+        margin-bottom: 1rem;
+        color: #007bff;
+        }
+
+        .notifications p {
+        font-size: 1rem;
+        color: #555;
+        }
+
+        /* Footer */
+        footer {
+        text-align: center;
+        background: #333;
+        color: #fff;
+        padding: 1rem 0;
+        margin-top: 2rem;
+        }
+
+        footer p {
+        font-size: 0.9rem;
+        }
+    </style>
 </head>
 <body>
-    <h1>{{ seller.store_name }}'s Dashboard</h1>
-    
+    {% include "seller/seller_header.html" %}
 
-    <h1>Welcome, {{ seller.store_name }}</h1>
-    <p>Store Description: {{ seller.store_description }}</p>
-    <p>Store Address: {{ seller.store_address }}</p>
-    <p>Contact Number: {{ seller.contact_number }}</p>
+    <h2 class="header-title">Welcome, {{ seller.username }}</h2>
+    <p>Here's a quick overview of your store's performance:</p>
 
-    <a href="{% url 'add_product' %}">Add New Product</a> | <a href="#">View Orders</a>
+    <div class="main-content" id="main-content">
+        <main>
+            <section class="dashboard">
+                <h2>Dashboard</h2>
+                <div class="stats">
+                <div class="stat">
+                    <h3>Total Sales</h3>
+                    <p>₹50,000</p>
+                </div>
+                <div class="stat">
+                    <h3>Total Orders</h3>
+                    <p>120</p>
+                </div>
+                <div class="stat">
+                    <h3>Products Listed</h3>
+                    <p>15</p>
+                </div>
+                </div>
+            </section>
+        
+            <section class="orders">
+                <h2>Orders</h2>
+                <ul>
+                <li>Pending Orders: 5</li>
+                <li>Completed Orders: 110</li>
+                <li>Refund Requests: 2</li>
+                </ul>
+            </section>
+        
+            <section class="actions">
+                <h2>Quick Actions</h2>
+                <button href="#">Add New Product</button>
+                <button href='/manage-products.html'">Manage Products</button>
+                <button href='/analytics.html'">View Analytics</button>
+            </section>
+        
+            <section class="notifications">
+                <h2>Notifications</h2>
+                <p>No new notifications</p>
+            </section>
+        </main>
+        
+        <footer>
+            <p>&copy; 2025 Digital Matty Pvt Ltd</p>
+        </footer>
+    </div>    
 </body>
 </html>

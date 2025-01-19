@@ -5,113 +5,122 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Seller Registration</title>
     <style>
+        /* General Reset */
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
             margin: 0;
             padding: 0;
-        }
-
-        .container {
-            max-width: 500px;
-            margin: 50px auto;
-            background: #fff;
-            padding: 20px 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        h2 {
-            text-align: center;
-            margin-bottom: 20px;
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
             color: #333;
         }
 
-        form {
-            display: flex;
-            flex-direction: column;
+        /* Center the form on the page */
+        .container {
+            max-width: 450px;
+            margin: 50px auto;
+            margin-left: 500px;
+            padding: 20px;
+            background: rgb(216, 216, 216);
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
-        label {
-            margin-top: 10px;
-            color: #555;
+        /* Form Title */
+        .h2 {
+            font-size: 24px;
             font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #444;
         }
 
-        input[type="text"],
-        input[type="email"],
-        input[type="password"] {
-            padding: 10px;
-            margin-top: 5px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+        /* Labels */
+        .container label {
+            display: block;
+            margin-bottom: 8px;
             font-size: 14px;
+            font-weight: 600;
+            color: #555;
         }
 
-        button {
-            margin-top: 20px;
+        /* Input Fields */
+        .container input[type="text"],
+        .container input[type="email"],
+        .container input[type="password"] {
+            width: 95%;
             padding: 10px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            font-size: 16px;
-            cursor: pointer;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border-color 0.3s ease-in-out;
+            color: #333;
+            background-color: rgb(250, 249, 249);
         }
 
-        button:hover {
+        .container input[type="text"]:focus,
+        .container input[type="email"]:focus,
+        .container input[type="password"]:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        /* Button */
+        .container button {
+            width: 100%;
+            padding: 10px;
+            background-color:rgb(47, 45, 45);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .container button:hover {
             background-color: #0056b3;
         }
 
-        .error {
-            color: red;
-            font-size: 14px;
-            margin-top: 10px;
-        }
-
-        .success {
-            color: green;
-            font-size: 14px;
-            margin-top: 10px;
-        }
-
-        .forgot-password {
+        /* Login Link */
+        .login-link {
             text-align: center;
-            margin-top: 10px;
+            margin-top: 15px;
+            font-size: 14px;
         }
 
-        .forgot-password a {
+        .login-link a {
             color: #007bff;
             text-decoration: none;
+            transition: color 0.3s ease-in-out;
         }
 
-        .forgot-password a:hover {
+        .login-link a:hover {
+            color: rgb(71, 71, 203);
             text-decoration: underline;
         }
-        
 
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            .h2 {
+                font-size: 20px;
+            }
+
+            .container button {
+                font-size: 14px;
+            }
+        }
        
     </style>
 </head>
 <body>
     <div class="container">
         <h2>Seller Account Registration</h2>
-
-        <!-- Display errors or success messages -->
-        {% if errors %}
-            <div class="error">
-                <ul>
-                    {% for field, error_list in errors.items %}
-                        <li><strong>{{ field }}:</strong> {{ error_list|join:", " }}</li>
-                    {% endfor %}
-                </ul>
-            </div>
-        {% endif %}
-        {% if success %}
-            <div class="success">
-                <p>{{ success }}</p>
-            </div>
-        {% endif %}
 
         <!-- Registration Form -->
         <form method="POST">

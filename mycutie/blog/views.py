@@ -63,7 +63,7 @@ def add_product(request):
     else:
         form = ProductForm()  
 
-    return render(request, 'blog/add_cart.html', {'form': form}) 
+    return render(request, 'blog/add_product.html', {'form': form}) 
 
 def product_list(request):
     products = Product.objects.all()

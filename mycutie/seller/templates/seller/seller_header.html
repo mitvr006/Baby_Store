@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Header</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+            background-color: #575757;
+            padding: 5px;
+            border: 2px solid white;
+            border-radius: 50%;
+        }
+
+        h2 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .navbar {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            font-size: 20px;
+        }
+
+        .navbar li {
+            margin-right: 20px;
+        }
+
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .navbar a:hover {
+            color: #007bff;
+        }
+
+        .seller-nav-links {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            font-size: 20px;
+        }
+
+        .seller-nav-links li {
+            margin-right: 20px;
+        }
+
+        .seller-nav-links a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .seller-nav-links a:hover {
+            color: #007bff;
+        }
+
+       
+
+    </style>
+</head>
+<body>
+    <!-- Header Section  -->
+    <header>
+        <div class="logo-container">
+            <img src="/static/images/baby_image.jpg" alt="Baby Store" class="logo">
+            <h2>Seller Dashboard</h2>
+        </div>
+        <nav class="navbar">
+            <ul class="seller-nav-links">
+                {% if request.session.seller_id %}
+                    <li><a href="{% url 'seller_login' %}"><i class="fas fa-user"></i> Welcome, {{ seller.username }}</a></li>
+                    <li><form action="{% url 'logout' %}" method="POST">{% csrf_token %}<a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a></form></li>
+                {% else %}
+                    <li><a href="{% url 'seller_login' %}"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                {% endif %}
+                <li><a href="{% url 'seller_dashboard' %}">Dashboard</a></li>   
+            </ul>
+        </nav>
+    </header>
+
+
+
+</body>
+</html>

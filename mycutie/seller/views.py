@@ -7,15 +7,15 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth.hashers import make_password, check_password
 
-
-
-def seller_page(request):
+def seller_dashboard(request):
     seller_id = request.session.get('seller_id')
-
     if seller_id:
         seller = Seller.objects.get(id=seller_id)
-        return render(request, 'seller/seller_page.html', {'seller': seller})
-    return render(request, 'seller/seller_page.html')
+        return render(request, 'seller/seller_dashboard.html', {'seller': seller})
+    return render(request, 'seller/seller_dashboard.html')
+
+def seller_header(request):
+    return render(request, 'seller/seller_header.html')
 
 # create a seller login view here request method is get and not post
 def seller_login(request):
@@ -29,7 +29,7 @@ def seller_login(request):
 
 
                 request.session['seller_id'] = seller.id
-                return redirect('seller_page')
+                return redirect('seller_dashboard')
             else:
                 messages.error(request, 'Invalid email or password.')
 
@@ -67,27 +67,15 @@ def seller_register(request):
 
 def logout_view(request):
     logout(request)
-    return redirect('seller_login')
-
-
+    return redirect('seller_dashboard')
 
 
 @login_required
-def seller_dashboard(request):
-    seller_id = request.session.get('seller_id')
-    if seller_id is None:
-        return redirect('seller_login')
-
-    seller = Seller.objects.get(id=seller_id)
-
-    return render(request, 'seller/seller_dashboard.html', {'seller': seller})
-
-@login_required
-def add_product(request):
+def seller_product(request):
     try:
         seller = Seller.objects.get(user=request.user)
     except Seller.DoesNotExist:
-        return redirect('become_seller')
+        return redirect('seller_product')
 
     if request.method == 'POST':
         form = ProductForm(request.POST)
@@ -99,4 +87,4 @@ def add_product(request):
     else:
         form = ProductForm()
 
-    return render(request, 'seller/add_product.html', {'form': form})
+    return render(request, 'seller/seller_product.html', {'form': form})

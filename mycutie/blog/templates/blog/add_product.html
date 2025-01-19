@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Product</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            /* font-family: Arial, sans-serif;       */
+            margin: 0;
+            padding: 0;
+            /* background-color: #f9f9f9; */
+        }
+        
+        /* Product Form styling */
+         .product-form {
+            max-width: 450px;
+            margin: 10px auto;
+            margin-left: 300px;
+            padding: 20px;
+            background: rgb(216, 216, 216);
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        } 
+        
+        /* h2 styling for product form heading */
+        .product-form h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #444;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            font-family: 'Times New Roman', Times, serif;
+        } 
+        
+        /* Label styling for form fields */
+        .product-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 14px;
+            margin-top: 5px;
+            margin-bottom: 5px;
+            margin-left: 5px;
+            margin-right: 5px;
+            text-align: left;
+        }
+
+        /* Input styling for form fields same size */
+        .product-form input[type="text"],
+        .product-form input[type="number"] {
+            width: 95%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border-color 0.3s ease-in-out;
+            color: #333;
+            background-color: rgb(237, 236, 236);
+            text-align: left;
+        } 
+        .product-form textarea {
+            width: 95%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border-color 0.3s ease-in-out;
+            color: #333;
+            background-color: rgb(237, 236, 236);
+            resize: vertical;
+        }
+
+        .product-form textarea:focus {
+            border-color: #4CAF50;
+            outline: none;
+            box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+        }
+
+        .product-form input[type="text"]:focus,
+        .product-form input[type="number"]:focus {
+            border-color: #4CAF50;
+            outline: none;
+            box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+        }
+
+        .product-form input[type="text"]:hover,
+        .product-form input[type="number"]:hover {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+        }
+
+        input[type="date"] {
+            width: 95%;
+            display: block;
+            margin: 0 auto;
+            text-align: center;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border-color 0.3s ease-in-out;
+            color: #333;
+            background-color: rgb(237, 236, 236);
+        }  
+        input[type="date"]:focus {
+            border-color: #4CAF50;
+            outline: none;
+            box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+        }
+
+        input[type="file"] {
+            width: 95%;
+            display: block;
+            margin: 0 auto;
+            text-align: center;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border-color 0.3s ease-in-out;
+            color: #333;
+            background-color: rgb(237, 236, 236);
+            cursor: pointer;
+        }
+        input[type="file"]:focus {
+            border-color: #4CAF50;
+            outline: none;
+            box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+        }
+        input[type="file"]::-webkit-file-upload-button {
+            display: inline-block;
+            margin: 0 auto;
+            text-align: center;
+            font-size: 13px;
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+        input[type="file"]::-webkit-file-upload-button:hover {
+            background-color: #45a049;
+        } 
+
+
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border-color 0.3s ease-in-out;
+            color: #333;
+            background-color: rgb(237, 236, 236);
+        }
+        select:focus {
+            border-color: #4CAF50;
+            outline: none;
+            box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+        }
+        
+        /* .success {
+            color: green;
+            font-weight: bold;
+            margin-bottom: 10px;
+        } */
+       
+
+        /* Button styling for create and cancel buttons */
+         .product-form button[type="submit"] {
+            display: inline-block;
+            width: 40%;
+            padding: 12px;
+            background-color:rgb(110, 171, 116);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            /* transition: background-color 0.3s ease-in-out; */
+            text-align: center;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .product-form button[type="submit"]:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
+        }
+
+        .product-form .cancel {
+            display: inline-block;
+            width: 40%;
+            padding: 12px;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            margin-left: 20px;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .product-form .cancel:hover {
+            background-color: #e53935;
+            transform: scale(1.05);
+        }
+
+        .product-form .buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            gap: 4%;
+        } 
+        button:active {
+            transform: scale(1);
+        }
+        .cancel:active {
+            transform: scale(1); 
+        }
+
+        /* Media query for smaller screens */
+        @media (max-width: 600px) {
+        .product-form {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+            color: #333;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease;
+            outline: none;
+            margin-bottom: 15px;
+        }
+        } 
+    </style>
+</head>
+<body>
+    {% include "header.html" %}
+    
+    <form  class="product-form" method="POST" enctype="multipart/form-data">
+        <h2>Create Product</h2>
+
+        {% csrf_token %}
+        <label for="id_name">Product Name:</label>
+        {{ form.name }}
+
+        <label for="id_description">Description:</label>
+        {{ form.description }}
+
+        <label for="id_price">Price:</label>
+        {{ form.price }}
+
+        <label for="id_photo">Image:</label>
+        {{ form.image }}
+
+        <label for="id_category">Category:</label>
+        {{ form.category }}
+
+        <div class="buttons">
+            <button type="submit">Create Product</button>
+            <a href="{% url 'home' %}" class="cancel">Cancel</a>
+        </div>
+    </form>
+    
+</body>
+</html>
