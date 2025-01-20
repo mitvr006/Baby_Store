@@ -1,17 +1,18 @@
 # views.py
 from django.shortcuts import render, redirect
-from .serializers import ProductForm
+from .forms import ProductForm
 from django.contrib.auth.decorators import login_required
-from .models import Seller
+from .models import Seller, Product, Category
 from django.contrib import messages
 from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth.hashers import make_password, check_password
 
 def seller_dashboard(request):
+    category = Category.objects.all()
     seller_id = request.session.get('seller_id')
     if seller_id:
         seller = Seller.objects.get(id=seller_id)
-        return render(request, 'seller/seller_dashboard.html', {'seller': seller})
+        return render(request, 'seller/seller_dashboard.html', {'seller': seller, 'category': category})
     return render(request, 'seller/seller_dashboard.html')
 
 def seller_header(request):
@@ -26,12 +27,13 @@ def seller_login(request):
 
         if seller is not None: 
             if check_password(password, seller.password):
-
-
                 request.session['seller_id'] = seller.id
+                messages.success(request, 'Login successful! Welcome to your dashboard.')
                 return redirect('seller_dashboard')
             else:
                 messages.error(request, 'Invalid email or password.')
+        else:
+            messages.error(request, 'No seller found with the provided email.')        
 
     return render(request, 'seller/seller_login.html')
 
@@ -47,17 +49,21 @@ def seller_register(request):
         address = request.POST.get('address')
 
         if password == confirm_password:
-            hash_password = make_password(password)
-            seller = Seller.objects.create(
-                username=username,
-                store_name=store_name,
-                phone_number=phone,
-                store_address=address,
-                email=email,
-                password=hash_password
-            )
+            if Seller.objects.filter(email=email).exists():
+                messages.error(request, 'An account with this email already exists.')
+            else:    
+                hash_password = make_password(password)
+                seller = Seller.objects.create(
+                    username=username,
+                    store_name=store_name,
+                    phone_number=phone,
+                    store_address=address,
+                    email=email,
+                    password=hash_password
+                )
 
             request.session['seller_id'] = seller.id
+            messages.success(request, 'Registration successful! You can now log in.')
             return redirect('seller_login')
         else:
             messages.error(request, 'Passwords do not match.')
@@ -72,19 +78,38 @@ def logout_view(request):
 
 @login_required
 def seller_product(request):
-    try:
-        seller = Seller.objects.get(user=request.user)
-    except Seller.DoesNotExist:
-        return redirect('seller_product')
-
     if request.method == 'POST':
-        form = ProductForm(request.POST)
+        form = ProductForm(request.POST, request.FILES)
         if form.is_valid():
-            product = form.save(commit=False)
-            product.seller = seller
-            product.save()
-            return redirect('seller_dashboard')
+            form.save()
+            return redirect('add_product')  # Redirect to the same page after successful submission
     else:
         form = ProductForm()
+    
+    categories = Category.objects.all()  # Fetch all categories for dropdown
+    return render(request, 'seller_dashboard.html', {
+        'form': form,
+        'categories': categories,
+    })   
+        
+def delete_product(request, product_id):
+    product = Product.objects.get(id=product_id)
+    product.delete()
+    return redirect('seller-dashboard')
 
-    return render(request, 'seller/seller_product.html', {'form': form})
+def update_product(request, product_id):
+    product = Product.objects.get(id=product_id)
+    if request.method == 'POST':
+        form = ProductForm(request.POST, instance=product)
+        if form.is_valid():
+            form.save()
+            return redirect('seller-dashboard')
+    else:
+        form = ProductForm(instance=product)
+    
+    return render(request, 'seller/seller_dashboard.html', {'form': form})
+
+
+
+
+

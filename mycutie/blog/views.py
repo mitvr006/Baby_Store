@@ -43,6 +43,7 @@ def login_view(request):
 
         if user is not None:
             login(request, user)
+            messages.success(request, 'You have successfully logged in.') 
             return redirect('home')  
         else:
             messages.error(request, 'Invalid email or password.')
@@ -58,16 +59,19 @@ def add_product(request):
     if request.method == 'POST':
         form = ProductForm(request.POST, request.FILES)  
         if form.is_valid():
-            form.save()  
+            form.save() 
+            messages.success(request, 'Product added successfully!') 
             return redirect('product_list')  
+        else:
+            messages.error(request, 'Failed to add product. Please check the form.')
+
     else:
-        form = ProductForm()  
+        form = ProductForm() 
 
     return render(request, 'blog/add_product.html', {'form': form}) 
 
 def product_list(request):
     products = Product.objects.all()
-    print("product", products)
     return render(request, 'shoped.html', {'products': products})
 
 
@@ -77,8 +81,8 @@ def product_detail(request, product_id):
 
 def buy_product(request, product_id):
     product = get_object_or_404(Product, id=product_id)
-    # Add your buy logic here (e.g., add to cart, process payment, etc.)
-    return redirect('success_page')  # Redirect to a success page or cart
+    product.buy(request.user)
+    return redirect('success_page')  
 
 def search_products(request):
     query = request.GET.get('query', '')
