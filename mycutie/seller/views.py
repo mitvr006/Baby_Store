@@ -1,19 +1,57 @@
 # views.py
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,get_object_or_404
 from .forms import ProductForm
 from django.contrib.auth.decorators import login_required
-from .models import Seller, Product, Category
+from .models import Seller, Product, Order
 from django.contrib import messages
 from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth.hashers import make_password, check_password
 
+
+
+def seller_home(request):
+    return render(request, 'seller/seller_home.html')
+
 def seller_dashboard(request):
-    category = Category.objects.all()
-    seller_id = request.session.get('seller_id')
-    if seller_id:
-        seller = Seller.objects.get(id=seller_id)
-        return render(request, 'seller/seller_dashboard.html', {'seller': seller, 'category': category})
     return render(request, 'seller/seller_dashboard.html')
+
+
+def view_products(request):
+    products = Product.objects.all()
+    return render(request, 'seller/view_products.html', {'products': products})
+
+def view_orders(request):
+    orders = Order.objects.all()
+    return render(request, 'seller/view_orders.html', {'orders': orders})
+
+
+def add_product(request):
+    if request.method == 'POST':
+        form = ProductForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('view_products')
+    else:
+        form = ProductForm()
+    return render(request, 'seller/add_product.html', {'form': form})
+
+def edit_product(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    if request.method == 'POST':
+        form = ProductForm(request.POST, request.FILES, instance=product)
+        if form.is_valid():
+            form.save()
+            return redirect('view_products')
+    else:
+        form = ProductForm(instance=product)
+    return render(request, 'seller/edit_product.html', {'form': form})
+
+
+def remove_product(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    product.delete()
+    return redirect('view_products')
+    
 
 def seller_header(request):
     return render(request, 'seller/seller_header.html')
@@ -29,7 +67,7 @@ def seller_login(request):
             if check_password(password, seller.password):
                 request.session['seller_id'] = seller.id
                 messages.success(request, 'Login successful! Welcome to your dashboard.')
-                return redirect('seller_dashboard')
+                return redirect('seller_home')
             else:
                 messages.error(request, 'Invalid email or password.')
         else:
@@ -76,38 +114,38 @@ def logout_view(request):
     return redirect('seller_dashboard')
 
 
-@login_required
-def seller_product(request):
-    if request.method == 'POST':
-        form = ProductForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('add_product')  # Redirect to the same page after successful submission
-    else:
-        form = ProductForm()
+# @login_required
+# def seller_product(request):
+#     if request.method == 'POST':
+#         form = ProductForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('add_product')  # Redirect to the same page after successful submission
+#     else:
+#         form = ProductForm()
     
-    categories = Category.objects.all()  # Fetch all categories for dropdown
-    return render(request, 'seller_dashboard.html', {
-        'form': form,
-        'categories': categories,
-    })   
+#     categories = Category.objects.all()  # Fetch all categories for dropdown
+#     return render(request, 'seller_dashboard.html', {
+#         'form': form,
+#         'categories': categories,
+#     })   
         
-def delete_product(request, product_id):
-    product = Product.objects.get(id=product_id)
-    product.delete()
-    return redirect('seller-dashboard')
+# def delete_product(request, product_id):
+#     product = Product.objects.get(id=product_id)
+#     product.delete()
+#     return redirect('seller-dashboard')
 
-def update_product(request, product_id):
-    product = Product.objects.get(id=product_id)
-    if request.method == 'POST':
-        form = ProductForm(request.POST, instance=product)
-        if form.is_valid():
-            form.save()
-            return redirect('seller-dashboard')
-    else:
-        form = ProductForm(instance=product)
+# def update_product(request, product_id):
+#     product = Product.objects.get(id=product_id)
+#     if request.method == 'POST':
+#         form = ProductForm(request.POST, instance=product)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('seller-dashboard')
+#     else:
+#         form = ProductForm(instance=product)
     
-    return render(request, 'seller/seller_dashboard.html', {'form': form})
+#     return render(request, 'seller/seller_dashboard.html', {'form': form})
 
 
 

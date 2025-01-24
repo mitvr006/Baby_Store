@@ -1,0 +1,29 @@
+<h2>Your Orders</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Order ID</th>
+            <th>Buyer</th>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Delivery Address</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for order in orders %}
+        <tr>
+            <td>{{ order.id }}</td>
+            <td>{{ order.buyer }}</td>
+            <td>{{ order.product.name }}</td>
+            <td>{{ order.quantity }}</td>
+            <td>{{ order.delivery_address }}</td>
+            <td>{{ order.status }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6">No orders found.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
