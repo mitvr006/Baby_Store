@@ -19,11 +19,11 @@ class Product(models.Model):
     image = models.ImageField(upload_to='products/', blank=True, null=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True)
 
-
-
-
     def __str__(self):
         return self.name
+    
+
+
     
 
 

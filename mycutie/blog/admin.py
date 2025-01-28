@@ -1,8 +1,9 @@
 from django.contrib import admin
-from .models import Category,Product
+from .models import Category,Product 
 
 # Register your models here.
 admin.site.register(Category)
+
 
 class Productadmin(admin.ModelAdmin):
     list_display = ('name', 'price', 'category') 
